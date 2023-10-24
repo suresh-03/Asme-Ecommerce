@@ -1,6 +1,6 @@
 <?php
 
-require(__DIR__."/showErrors.php");
+require("/opt/lampp/htdocs/asme/showErrors.php");
 
 $hostname = "localhost";
 $username = "root";
