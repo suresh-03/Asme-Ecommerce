@@ -1,3 +1,10 @@
+<?php
+
+include("/opt/lampp/htdocs/asme/showErrors.php");
+include("/opt/lampp/htdocs/asme/controllers/process-signup.php");
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +33,7 @@
             </div>
             <div class="mb-1">
                 <label for="mobile" class="form-label">Mobile Number</label>
-                <input type="number" class="form-control form-control-sm" id="mobile" aria-describedby="mobile" required>
+                <input type="number" style="-moz-appearance: textfield;" class="form-control form-control-sm" id="mobile" aria-describedby="mobile" required>
             </div>
             <div class="mb-1">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>
