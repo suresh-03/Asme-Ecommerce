@@ -7,11 +7,8 @@ $username = "root";
 $password = "";
 $dbname = "asme";
 
-$conn = new mysqli($hostname,$username,$password,$dbname);
+$conn = new mysqli($hostname, $username, $password, $dbname);
 
-if($conn->connect_error){
+if ($conn->connect_error) {
     die($conn->connect_error);
-}
-else{
-    echo("database connected");
 }

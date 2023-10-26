@@ -1,7 +1,68 @@
 <?php
 
 include("/opt/lampp/htdocs/asme/showErrors.php");
-include("/opt/lampp/htdocs/asme/controllers/process-signup.php");
+
+include("../database/connection.php");
+$nameError = false;
+$mobError = false;
+$mailError = false;
+$passError = false;
+$success = false;
+$error = false;
+$message = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (strlen($_POST["name"]) < 6) {
+        $nameError = true;
+        $error = true;
+        $message = "username atleast have 6 letters!";
+    } else if (strlen((string)$_POST["mobile"]) != 10) {
+        $mobError = true;
+        $error = true;
+        $message = "mobile number should have 10 digits!";
+    } else if (empty($_POST["email"])) {
+        $mailError = true;
+        $error = true;
+        $message = "email is required";
+    } else if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+        $mailError = true;
+        $error = true;
+        $message = "invalid email";
+    } else if (strlen($_POST["password"]) < 6) {
+        $passError = true;
+        $error = true;
+        $message = "password must be atleast 6 characters!";
+    }
+    if (!$nameError && !$mailError && !$passError && !$mobError) {
+
+        $name = $_POST["name"];
+        $mobile = $_POST["mobile"];
+        $mobile = (string)$mobile;
+        $email = $_POST["email"];
+        $passwd = password_hash($_POST["password"], PASSWORD_DEFAULT);
+
+        $sql = "SELECT email FROM users";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (strcmp($row["email"], $email)) {
+                    $error = true;
+                    $message = "email already exists";
+                    break;
+                }
+            }
+        }
+
+
+        $sql = "INSERT INTO `users`(`username`,`mobile`,`email`,`password`,`date`)VALUES('$name','$mobile','$email','$passwd',current_timestamp())";
+        if ($conn->query($sql)) {
+            $success = true;
+            $message = "Registration Successful";
+        } else {
+            die($conn->error . " : " . $conn->errno);
+        }
+    }
+}
 
 ?>
 
@@ -21,28 +82,43 @@ include("/opt/lampp/htdocs/asme/controllers/process-signup.php");
 </head>
 
 <body>
+    <?php
+    if ($error) {
+        echo
+        '
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+        <strong>Error!</strong> ' . $message . '
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
+    ';
+    }
+    if ($success) {
+        echo '
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Success!</strong> ' . $message . '
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    ';
+    }
+    ?>
     <div class="container-fluid" style="display: flex; justify-content:center; align-items:center; height:100vh;">
-        <form class="sizing-form">
+        <form action="./signup.php" method="post" class="sizing-form">
             <div class="mb-1">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" id="form-control" class="form-control form-control-sm" id="name" aria-describedby="name" required>
+                <input type="text" name="name" id="form-control" class="form-control form-control-sm" id="name" aria-describedby="name" required>
             </div>
             <div class="mb-1">
                 <label for="mobile" class="form-label">Mobile Number</label>
-                <input type="number" style="-moz-appearance: textfield;" class="form-control form-control-sm" id="mobile" aria-describedby="mobile" required>
+                <input type="number" name="mobile" style="-moz-appearance: textfield;" class="form-control form-control-sm" id="mobile" aria-describedby="mobile" required>
             </div>
             <div class="mb-1">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                <input type="email" name="email" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp" required>
                 <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
             </div>
             <div class="mb-1">
                 <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control form-control-sm" id="exampleInputPassword1" required>
+                <input type="password" name="password" class="form-control form-control-sm" id="exampleInputPassword1" required>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
