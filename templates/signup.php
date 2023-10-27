@@ -1,5 +1,11 @@
 <?php
 
+function redirect($url)
+{
+    header('Location: ' . $url, true);
+    die();
+}
+
 include("/opt/lampp/htdocs/asme/showErrors.php");
 
 include("../database/connection.php");
@@ -10,6 +16,7 @@ $passError = false;
 $success = false;
 $error = false;
 $message = "";
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (strlen($_POST["name"]) < 6) {
@@ -41,25 +48,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = $_POST["email"];
         $passwd = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
-        $sql = "SELECT email FROM users";
+        $sql = "SELECT email,mobile FROM users";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                if (strcmp($row["email"], $email)) {
+                if (strcmp($row["email"], $email) == 0) {
                     $error = true;
                     $message = "email already exists";
+                    break;
+                }
+                if (strcmp($row["mobile"], $mobile) == 0) {
+                    $error = true;
+                    $message = "mobile number already exists";
                     break;
                 }
             }
         }
 
-
-        $sql = "INSERT INTO `users`(`username`,`mobile`,`email`,`password`,`date`)VALUES('$name','$mobile','$email','$passwd',current_timestamp())";
-        if ($conn->query($sql)) {
-            $success = true;
-            $message = "Registration Successful";
-        } else {
-            die($conn->error . " : " . $conn->errno);
+        if (!$error) {
+            $sql = "INSERT INTO `users`(`username`,`mobile`,`email`,`password`,`date`)VALUES('$name','$mobile','$email','$passwd',current_timestamp())";
+            if ($conn->query($sql)) {
+                $success = true;
+                $message = "Registration Successful";
+                redirect("index.php");
+            } else {
+                die($conn->error . " : " . $conn->errno);
+            }
         }
     }
 }
@@ -83,26 +97,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <?php
-    if ($error) {
-        echo
-        '
+    $pageRefreshed = isset($_SERVER["HTTP_CACHE_CONTROL"]) && $_SERVER["HTTP_CACHE_CONTROL"] === "max-age=0";
+    // if ($pageRefreshed) {
+    //     $error = false;
+    //     $success = false;
+    // }
+    if (!$pageRefreshed) {
+        if ($error) {
+
+            echo
+            '
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong>Error!</strong> ' . $message . '
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     ';
-    }
-    if ($success) {
-        echo '
+        }
+        if ($success) {
+            echo '
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <strong>Success!</strong> ' . $message . '
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     ';
+        }
     }
     ?>
     <div class="container-fluid" style="display: flex; justify-content:center; align-items:center; height:100vh;">
-        <form action="./signup.php" method="post" class="sizing-form">
+        <form onsubmit="handleReload(e)" action="./signup.php" method="post" class="sizing-form">
             <div class="mb-1">
                 <label for="name" class="form-label">Name</label>
                 <input type="text" name="name" id="form-control" class="form-control form-control-sm" id="name" aria-describedby="name" required>
@@ -124,6 +146,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </div>
     <!-- bootstrap-javascript -->
+    <script>
+        function handleReload(e) {
+            e.preventDefault();
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 </body>
