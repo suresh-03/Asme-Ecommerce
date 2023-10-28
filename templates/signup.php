@@ -1,78 +1,81 @@
 <?php
-
+include("/opt/lampp/htdocs/asme/showErrors.php");
+session_start();
 function redirect($url)
 {
     header('Location: ' . $url, true);
     die();
 }
 
-include("/opt/lampp/htdocs/asme/showErrors.php");
+if (isset($_SESSION["login_user"])) {
+    redirect("index.php");
+} else {
+    include("../database/connection.php");
+    $nameError = false;
+    $mobError = false;
+    $mailError = false;
+    $passError = false;
+    $success = false;
+    $error = false;
+    $message = "";
 
-include("../database/connection.php");
-$nameError = false;
-$mobError = false;
-$mailError = false;
-$passError = false;
-$success = false;
-$error = false;
-$message = "";
 
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (strlen($_POST["name"]) < 6) {
+            $nameError = true;
+            $error = true;
+            $message = "username atleast have 6 letters!";
+        } else if (strlen((string)$_POST["mobile"]) != 10) {
+            $mobError = true;
+            $error = true;
+            $message = "mobile number should have 10 digits!";
+        } else if (empty($_POST["email"])) {
+            $mailError = true;
+            $error = true;
+            $message = "email is required";
+        } else if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+            $mailError = true;
+            $error = true;
+            $message = "invalid email";
+        } else if (strlen($_POST["password"]) < 6) {
+            $passError = true;
+            $error = true;
+            $message = "password must be atleast 6 characters!";
+        }
+        if (!$nameError && !$mailError && !$passError && !$mobError) {
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (strlen($_POST["name"]) < 6) {
-        $nameError = true;
-        $error = true;
-        $message = "username atleast have 6 letters!";
-    } else if (strlen((string)$_POST["mobile"]) != 10) {
-        $mobError = true;
-        $error = true;
-        $message = "mobile number should have 10 digits!";
-    } else if (empty($_POST["email"])) {
-        $mailError = true;
-        $error = true;
-        $message = "email is required";
-    } else if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-        $mailError = true;
-        $error = true;
-        $message = "invalid email";
-    } else if (strlen($_POST["password"]) < 6) {
-        $passError = true;
-        $error = true;
-        $message = "password must be atleast 6 characters!";
-    }
-    if (!$nameError && !$mailError && !$passError && !$mobError) {
+            $name = $_POST["name"];
+            $mobile = $_POST["mobile"];
+            $mobile = (string)$mobile;
+            $email = $_POST["email"];
+            $passwd = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
-        $name = $_POST["name"];
-        $mobile = $_POST["mobile"];
-        $mobile = (string)$mobile;
-        $email = $_POST["email"];
-        $passwd = password_hash($_POST["password"], PASSWORD_DEFAULT);
-
-        $sql = "SELECT email,mobile FROM users";
-        $result = $conn->query($sql);
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                if (strcmp($row["email"], $email) == 0) {
-                    $error = true;
-                    $message = "email already exists";
-                    break;
-                }
-                if (strcmp($row["mobile"], $mobile) == 0) {
-                    $error = true;
-                    $message = "mobile number already exists";
-                    break;
+            $sql = "SELECT email,mobile FROM users";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    if (strcmp($row["email"], $email) == 0) {
+                        $error = true;
+                        $message = "email already exists";
+                        break;
+                    }
+                    if (strcmp($row["mobile"], $mobile) == 0) {
+                        $error = true;
+                        $message = "mobile number already exists";
+                        break;
+                    }
                 }
             }
-        }
 
-        if (!$error) {
-            $sql = "INSERT INTO `users`(`username`,`mobile`,`email`,`password`,`date`)VALUES('$name','$mobile','$email','$passwd',current_timestamp())";
-            if ($conn->query($sql)) {
-                $success = true;
-                $message = "Registration Successful";
-                redirect("index.php");
-            } else {
-                die($conn->error . " : " . $conn->errno);
+            if (!$error) {
+                $sql = "INSERT INTO `users`(`username`,`mobile`,`email`,`password`,`date`)VALUES('$name','$mobile','$email','$passwd',current_timestamp())";
+                if ($conn->query($sql)) {
+                    $success = true;
+                    $message = "Registration Successful";
+                    redirect("index.php");
+                } else {
+                    die($conn->error . " : " . $conn->errno);
+                }
             }
         }
     }

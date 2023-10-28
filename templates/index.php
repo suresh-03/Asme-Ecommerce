@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include("/opt/lampp/htdocs/asme/showErrors.php");
 
 ?>
@@ -34,15 +34,24 @@ include("/opt/lampp/htdocs/asme/showErrors.php");
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="#">Home</a>
             </li>
+            <?php
+            if (!isset($_SESSION["login_user"])) {
+              echo '
             <li class="nav-item">
               <a class="nav-link" href="../controllers//signup.php">signup</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/user/signin">signin</a>
-            </li>
+            </li>';
+            }
+            ?>
             <li class="nav-item">
               <a class="nav-link" href="/user/cart">cart</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/user/cart">logout</a>
+            </li>
+
           </ul>
           <form action="handleSearch.php" method="post" class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
