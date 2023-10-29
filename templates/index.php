@@ -21,68 +21,80 @@ include("/opt/lampp/htdocs/asme/showErrors.php");
 </head>
 
 <body>
-  <!-- navbar-main-1 -->
-  <div class="container-fluid p-0 m-0 sticky-top">
-    <nav class="navbar bg-dark navbar-expand-lg border-bottom border-body" data-bs-theme="dark">
+   <!-- navbar-1 -->
+   <div>
+        
+        <div class="container-fluid p-0 m-0 sticky-top">
+          <nav class="navbar bg-dark navbar-expand-lg border-bottom border-body" data-bs-theme="dark">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">AsMe</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="#">Home</a>
+                  </li>
+                  <?php
+                  if (!isset($_SESSION["login_user"])) {
+                    echo '
+                  <li class="nav-item">
+                    <a class="nav-link" href="signup.php">signup</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="login.php">signin</a>
+                  </li>';
+                  }
+                  else{
+                    echo '   <li class="nav-item">
+                    <a class="nav-link" href="/user/cart">cart</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="logout.php">logout</a>
+                  </li>';
+                  }
+                  ?>
+               
+      
+                </ul>
+                <form action="handleSearch.php" method="post" class="d-flex" role="search">
+                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+              </div>
+            </div>
+          </nav>
+        </div>
+        
+        </div>
+  <!-- navbar-main-2 -->
+  <div class="container-fluid p-0 m-0">
+    <nav class="navbar bg-secondary navbar-expand-lg border-bottom border-body" data-bs-theme="dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">brand</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="#">Home</a>
-            </li>
-            <?php
-            if (!isset($_SESSION["login_user"])) {
-              echo '
-            <li class="nav-item">
-              <a class="nav-link" href="signup.php">signup</a>
+              <a class="nav-link" aria-current="page" href="#">All</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="login.php">signin</a>
-            </li>';
-            }
-            else{
-              echo '   <li class="nav-item">
-              <a class="nav-link" href="/user/cart">cart</a>
+              <a class="nav-link" aria-current="page" href="#">T-shirts</a>
+            </li> <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="#">shirts</a>
+            </li> <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="#">pants</a>
+            </li> <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="#">jeans</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="logout.php">logout</a>
-            </li>';
-            }
-            ?>
-         
-
           </ul>
-          <form action="handleSearch.php" method="post" class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
         </div>
       </div>
     </nav>
   </div>
-  <!-- navbar-2 -->
-  <div>
-
-    <nav class="navbar navbar-2 navbar-expand-lg ">
-      <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-link" href="#">Home</a>
-            <a class="nav-link" href="#">Features</a>
-            <a class="nav-link" href="#">Pricing</a>
-            <a class="nav-link" href="#">Disabled</a>
-          </div>
-        </div>
-      </div>
-    </nav>
-  </div>
+ 
   <!-- Alert -->
   <!-- <div class="alert alert-success alert-dismissible fade show" role="alert">
     <strong>Holy guacamole!</strong> You should check in on some of those fields below.

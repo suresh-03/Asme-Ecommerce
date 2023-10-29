@@ -72,6 +72,7 @@ if (isset($_SESSION["login_user"])) {
                 if ($conn->query($sql)) {
                     $success = true;
                     $message = "Registration Successful";
+                    $_SESSION["login_user"] = $email;
                     redirect("index.php");
                 } else {
                     die($conn->error . " : " . $conn->errno);
@@ -91,7 +92,7 @@ if (isset($_SESSION["login_user"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <!--custom css -->
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../style.css?v=<?php echo time()?>">
     <!-- <style>
      
     </style> -->
@@ -129,7 +130,7 @@ if (isset($_SESSION["login_user"])) {
         }
     }
     ?>
-       <h1 style="text-align: center;margin-top:20px;">Sign up</h1>
+       <h1 id="h1-signup" style="text-align: center;margin-top:20px;">Sign up</h1>
     <div class="container-all">
     <div class="container-fluid" id="signup-container" style="display: flex; justify-content:center; align-items:center;margin-top:-40px;">
         <form onsubmit="handleReload(e)" action="./signup.php" method="post" class="sizing-form">
