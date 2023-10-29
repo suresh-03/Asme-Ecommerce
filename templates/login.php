@@ -96,7 +96,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     ';
     }
     ?>
-    <div class="container-fluid" style="display: flex; justify-content:center; align-items:center; height:100vh;">
+    <h1 style="text-align: center;margin-top:20px;">Sign in</h1>
+
+    <div class="container-fluid" style="display: flex; justify-content:center; align-items:center; height:100vh; margin-top:-80px">
         <form action="./login.php" method="post" class="sizing-form">
             <div class="mb-1">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>

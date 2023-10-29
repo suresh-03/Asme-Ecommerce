@@ -91,14 +91,17 @@ if (isset($_SESSION["login_user"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <!--custom css -->
-    <link rel="stylesheet" href="/asme/styles/style.css">
+    <link rel="stylesheet" href="../style.css">
+    <!-- <style>
+     
+    </style> -->
     <!-- bootstrap-css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <!-- fontawesome-link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 
-<body>
+<body style="background-color: #3d3d3d;">
     <?php
     $pageRefreshed = isset($_SERVER["HTTP_CACHE_CONTROL"]) && $_SERVER["HTTP_CACHE_CONTROL"] === "max-age=0";
     // if ($pageRefreshed) {
@@ -126,7 +129,9 @@ if (isset($_SESSION["login_user"])) {
         }
     }
     ?>
-    <div class="container-fluid" style="display: flex; justify-content:center; align-items:center; height:100vh;">
+       <h1 style="text-align: center;margin-top:20px;">Sign up</h1>
+    <div class="container-all">
+    <div class="container-fluid" id="signup-container" style="display: flex; justify-content:center; align-items:center;margin-top:-40px;">
         <form onsubmit="handleReload(e)" action="./signup.php" method="post" class="sizing-form">
             <div class="mb-1">
                 <label for="name" class="form-label">Name</label>
@@ -147,6 +152,7 @@ if (isset($_SESSION["login_user"])) {
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+    </div>
     </div>
     <!-- bootstrap-javascript -->
     <script>
