@@ -1,6 +1,14 @@
 <?php 
 session_start();
+function redirect($url){
+  header("Location: ".$url,true);
+  die();
+}
+include("/opt/lampp/htdocs/asme/showErrors.php");
 include("/opt/lampp/htdocs/asme/admin/controllers/dashboardController.php");
+if(!isset($_SESSION["admin"])){
+  redirect("login.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -19,9 +27,6 @@ include("/opt/lampp/htdocs/asme/admin/controllers/dashboardController.php");
 </head>
 
 <body>
-<?php 
-if(isset($_SESSION["admin"])){
-echo'
 <nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary"  data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Admin Dashboard</a>
@@ -49,18 +54,7 @@ echo'
     </div>
   </div>
 </nav>
-';
-}
-else{
-    echo
-    '
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <strong>Error! </strong>Access Denied! <a href="/asme/admin/api/login.php">Login</a>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-';
-}
-?>
+
 <!-- bootstrap-javascript -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>

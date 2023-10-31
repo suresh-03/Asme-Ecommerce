@@ -1,5 +1,9 @@
 <?php 
 include("/opt/lampp/htdocs/asme/admin/controllers/loginController.php");
+if(isset($_SESSION["admin"])){
+    redirect("dashboard.php");
+    die();
+}
 ?>
 
 
