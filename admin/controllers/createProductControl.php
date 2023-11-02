@@ -6,8 +6,10 @@ include("/opt/lampp/htdocs/asme/showErrors.php");
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $prodName = $_POST["prodName"];
     $prodDetais = $_POST["prodDetails"];
+    // for getting files from form POST requrest
     $prodImg = $_FILES["prodImg"]['tmp_name'];
 
+    // for file storing in database
     $file = fopen($prodImg,"r");
     $fileContents = fread($file,filesize($prodImg));
     fclose($file);
