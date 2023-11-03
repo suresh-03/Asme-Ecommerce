@@ -45,7 +45,8 @@ $message = "";
                     $row = $result->fetch_assoc();
                     $hashed_password = password_verify($passwd, $row["password"]);
                     if ($hashed_password) {
-                        $_SESSION["admin"] = $admin;
+                        $adminHash = password_hash($admin,PASSWORD_DEFAULT);
+                        $_SESSION["admin"] = $adminHash;
                         redirect("/asme/admin/api/dashboard.php");
                     } else {
                         $error = true;
