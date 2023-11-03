@@ -19,7 +19,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $sql = "INSERT INTO shirts(product_name,product_img,product_details)VALUES('$prodName','$fileContents','$prodDetais');";
 
     if($conn->query($sql)){
-        echo("success");
+       redirect("../api/dashboard.php");
     }
     else{
         die($conn->error);

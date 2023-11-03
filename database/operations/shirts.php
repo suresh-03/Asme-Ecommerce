@@ -11,4 +11,8 @@ $sql = "CREATE TABLE shirts(
     product_reviews TEXT
 
 )";
-$conn->query($sql);
+if($conn->query($sql)){
+    echo("success");
+}
+
+
