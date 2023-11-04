@@ -57,11 +57,22 @@ if(!isset($_SESSION["admin"])){
 
 <!-- cards -->
 <div class="cards" id="cards">
+  <table>
+<th>name</th>
+<th>details</th>
+<th>image</th>
+
   <?php
-  while($row = $result->fetch_array()){
-echo '<img src="data:image/jpeg;base64,'.base64_encode($row['product_img']).'"/>';
+  while($row = $result->fetch_assoc()){
+echo '<tr>
+<td>'.$row['product_name'].'
+<td>'.$row['product_details'].'
+<td><img src="data:image/jpeg;base64,'.base64_encode($row['product_img']).'"/></td>
+</tr>';
   }
 ?>
+  </table>
+
 </div>
 
 <!-- bootstrap-javascript -->
