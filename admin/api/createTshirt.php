@@ -5,7 +5,7 @@ function redirect($url){
   die();
 }
 include("/opt/lampp/htdocs/asme/showErrors.php");
-include("/opt/lampp/htdocs/asme/admin/controllers/createProductControl.php");
+include("/opt/lampp/htdocs/asme/admin/controllers/createTshirtControl.php");
 if(!isset($_SESSION["admin"])){
   redirect("login.php");
 }

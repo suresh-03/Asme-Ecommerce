@@ -37,10 +37,13 @@ if(!isset($_SESSION["admin"])){
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
        
         <li class="nav-item">
-          <a class="nav-link" href="#">Home</a>
+          <a class="nav-link" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">products</a>
+          <a class="nav-link" href="/asme/admin/api/createShirt.php">Shirts</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/asme/admin/api/createTshirt.php">T-Shirts</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/asme/admin/controllers/logoutController.php">logout</a>
