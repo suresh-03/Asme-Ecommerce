@@ -28,7 +28,7 @@ if(!isset($_SESSION["admin"])){
 
 <body>
 
-<form name="file" action="./createProduct.php" method="post" enctype="multipart/form-data">
+<form name="file" action="./createTshirt.php" method="post" enctype="multipart/form-data">
     <input type="text" name="prodName" placeholder="product name" required>
     <input type="file" name="prodImg" value="" required>
     <textarea name="prodDetails" id="prodDetails" cols="30" rows="10" required></textarea>

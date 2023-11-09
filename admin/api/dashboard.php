@@ -58,23 +58,11 @@ if(!isset($_SESSION["admin"])){
   </div>
 </nav>
 
-<!-- cards -->
-<div class="cards" id="cards">
-  <table>
-<th>name</th>
-<th>details</th>
-<th>image</th>
+<!-- content -->
 
-  <?php
-  while($row = $result->fetch_assoc()){
-echo '<tr>
-<td>'.$row['product_name'].'
-<td>'.$row['product_details'].'
-<td><img src="data:image/jpeg;base64,'.base64_encode($row['product_img']).'"/></td>
-</tr>';
-  }
-?>
-  </table>
+<h1 style="text-align: center;">welcome to dashboard</h1>
+
+
 
 </div>
 
