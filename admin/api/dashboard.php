@@ -40,7 +40,7 @@ if(!isset($_SESSION["admin"])){
           <a class="nav-link" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/asme/admin/api/createShirt.php">Shirts</a>
+          <a class="nav-link" href="/asme/admin/api/viewShirts.php">Shirts</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/asme/admin/api/createTshirt.php">T-Shirts</a>
