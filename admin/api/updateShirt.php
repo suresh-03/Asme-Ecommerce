@@ -15,7 +15,6 @@ if(!isset($_SESSION["admin"])){
 if(isset($_GET["updateId"])){
 $updateId = $_GET["updateId"];
 }
-$id = $updateId;
 
 
 ?>
@@ -41,7 +40,7 @@ $id = $updateId;
     <div class="mb-3">
     <label for="staticEmail" class="col-sm-2 col-form-label">Product Id</label>
     <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value=<?php echo $id ?>>
+      <input type="text" readonly class="form-control-plaintext" id="staticEmail" name="product_id" value=<?php echo $updateId ?>>
     </div>
 
       <label for="exampleFormControlInput1" class="form-label">Product Name</label>
@@ -69,6 +68,7 @@ $id = $updateId;
 <?php
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
+    $id = $_POST["product_id"];
 $product_name = $_POST["product_name"];
 $product_details = $_POST["product_details"];
 
@@ -86,8 +86,7 @@ $product_details = $_POST["product_details"];
   $sql = "UPDATE shirts SET product_name = '$product_name',product_img = '$fileContents',product_details = '$product_details' WHERE product_id =' $id'";
 
   if($conn->query($sql)){
-    echo $id;
-    // redirect("viewShirts.php");
+    redirect("viewShirts.php");
   }
   else{
     die($conn->error);

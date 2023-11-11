@@ -11,6 +11,7 @@ else{
     redirect("login.php");
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -84,7 +85,7 @@ else{
             width="100" 
             height="100"
             ></td>
-            <td><button class="btn btn-secondary"><a style="color:white;text-decoration:none;" href="#">View</a></button></td>
+            <td><button class="btn btn-secondary"><a style="color:white; text-decoration:none;" href="/asme/admin/api/productDetails.php?details='.$row["product_id"].'">View</a></button></td>
             <td><button class="btn btn-success"><a style="color:white;text-decoration:none;" href="updateShirt.php?updateId='.$row["product_id"].'">Update</a></button></td>
             <td><button class="btn btn-danger" ><a style="color:white;text-decoration:none;" href="/asme/admin/controllers/deleteController.php?deleteId='.$row["product_id"].'">Delete</a></button></td>
           </tr>';
@@ -93,7 +94,9 @@ else{
     ?>
   </tbody>
 </table>
-</div>
+
+
+
 
        
       
