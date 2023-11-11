@@ -21,7 +21,7 @@ else{
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <!--custom css -->
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="/admin/style.css">
     <!-- bootstrap-css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <!-- fontawesome-link -->
@@ -59,6 +59,7 @@ else{
     </div>
   </div>
 </nav>
+<p style="text-align: center; margin-top:20px;">want to create new product? <button class="btn btn-primary text-light"><a style="color:white;text-decoration:none;" href="/asme/admin/api/createShirt.php">Create</a></button></p>
 <div class="table-responsive">
 <table class="table table-dark">
   <thead>
@@ -66,7 +67,8 @@ else{
       <th scope="col">Product ID</th>
       <th scope="col">Product Name</th>
       <th scope="col">Product Image</th>
-      <th colspan="4" scope="col">Product Details</th>
+      <th scope="col">Product Details</th>
+      <th colspan="2" scope="col">Operations</th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
@@ -83,8 +85,8 @@ else{
             height="100"
             ></td>
             <td><button class="btn btn-secondary"><a style="color:white;text-decoration:none;" href="#">View</a></button></td>
-            <td><button class="btn btn-primary"><a style="color:white;text-decoration:none;" href="#">Update</a></button></td>
-            <td><button class="btn btn-danger" onclick="deleteData('.$row["product_id"].');">Delete</button></td>
+            <td><button class="btn btn-success"><a style="color:white;text-decoration:none;" href="updateShirt.php?updateId='.$row["product_id"].'">Update</a></button></td>
+            <td><button class="btn btn-danger" ><a style="color:white;text-decoration:none;" href="/asme/admin/controllers/deleteController.php?deleteId='.$row["product_id"].'">Delete</a></button></td>
           </tr>';
         }
     }
@@ -93,14 +95,7 @@ else{
 </table>
 </div>
 
-        <script>
-              function deleteData(id){
-             document.cookie = "id = "+id;
-        let decodedCookie = decodeURIComponent(document.cookie);
-  let ca = decodedCookie.split(';');
-              
-        }
-        </script>
+       
       
    
      
