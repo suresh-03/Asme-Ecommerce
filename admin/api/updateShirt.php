@@ -34,8 +34,8 @@ $updateId = $_GET["updateId"];
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 
-<body>
-<div class="container-fluid">
+<body style="display: flex; height:100vh; align-items:center">
+<div class="container-fluid" style="display: flex; justify-content:center; align-items:center; width:500px; height:700px; background-color:aqua">
     <form name="file" enctype="multipart/form-data" action="./updateShirt.php" method="post"> 
     <div class="mb-3">
     <label for="staticEmail" class="col-sm-2 col-form-label">Product Id</label>

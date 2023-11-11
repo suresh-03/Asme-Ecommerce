@@ -10,5 +10,16 @@ else{
     redirect("login.php");
     }
 }
+if(isset($_GET["details"])){
+    $details = $_GET["details"];
+    $sql = "SELECT product_details FROM shirts WHERE product_id = '$details'";
+    if($conn->query($sql)){
+        $result = $conn->query($sql);
+        echo '<p>'.$result->fetch_column(0).'</p>';
+    }
+    else{
+        die($conn->error);
+    }
+}
 
 ?>
